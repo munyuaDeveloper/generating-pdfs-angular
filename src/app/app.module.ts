@@ -1,8 +1,10 @@
+import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ReplaceUnderscorePipe } from './replace-underscore.pipe';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,12 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    DatePipe,
+    ReplaceUnderscorePipe,
+    TitleCasePipe,
+    CurrencyPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
