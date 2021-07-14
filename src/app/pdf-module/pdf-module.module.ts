@@ -8,6 +8,7 @@ import { PackedComponent } from './packed/packed.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ArrearsComponent } from './arrears/arrears.component';
 import { OutletComponent } from './outlet/outlet.component';
+import { StatementAccountComponent } from './statement-account/statement-account.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { OutletComponent } from './outlet/outlet.component';
     PackedComponent,
     PaymentsComponent,
     ArrearsComponent,
+    StatementAccountComponent,
   ],
   imports: [
     CommonModule,

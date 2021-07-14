@@ -11,19 +11,22 @@
     <div class="col-sm-8 offset-2">
       <ul class="list-group">
         <li class="list-group-item">
-          <app-payments></app-payments>
+          <app-payments [payments]="payments"></app-payments>
         </li>
         <li class="list-group-item">
-          <app-running-statement></app-running-statement>
+          <app-running-statement [runningStatements]="runningStatements"></app-running-statement>
         </li>
         <li class="list-group-item">
-          <app-arrears></app-arrears>
+          <app-arrears [arrears]="arrears"></app-arrears>
         </li>
         <li class="list-group-item">
-          <app-billing></app-billing>
+          <app-billing [bills]="bills"></app-billing>
         </li>
         <li class="list-group-item">
-          <app-packed></app-packed>
+          <app-packed [properties]="properties"></app-packed>
+        </li>
+        <li class="list-group-item">
+          <app-statement-account [StatementsOfAccounts]="StatementsOfAccounts"></app-statement-account>
         </li>
       </ul>
     </div>

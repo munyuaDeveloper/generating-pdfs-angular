@@ -1,67 +1,44 @@
-import { DatePipe, TitleCasePipe } from '@angular/common';
-import { ReplaceUnderscorePipe } from 'src/app/replace-underscore.pipe';
+import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { ReplaceUnderscorePipe } from 'src/app/replace-underscore.pipe';
+import { StatementAccount } from '../interfaces/data.interface';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
-export interface Property_statu {
-  id: string;
-  name: string;
-  code: string;
-}
-
-export interface Property_category {
-  id: string;
-  name: string;
-  code: string;
-}
-
-export interface PropertyInterface {
-  id: string;
-  name: string;
-  property_number: string;
-  property_status: Property_statu;
-  property_category: Property_category;
-}
-// FOR ANGULAR 8
-// import pdfMake from "pdfmake/build/pdfmake";
-// import pdfFonts from "pdfmake/build/vfs_fonts";
-// import { ReplaceUnderscorePipe } from '../../replace-underscore.pipe';
-// pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-packed',
-  templateUrl: './packed.component.html',
-  styleUrls: ['./packed.component.scss']
+  selector: 'app-statement-account',
+  templateUrl: './statement-account.component.html',
+  styleUrls: ['./statement-account.component.scss']
 })
-export class PackedComponent implements OnInit {
+export class StatementAccountComponent implements OnInit {
 
 
-  @Input() properties: PropertyInterface[];
-
+  @Input() StatementsOfAccounts: StatementAccount[]
 
   constructor(private dateFormatter: DatePipe,
     private replaceUderscore: ReplaceUnderscorePipe,
-    private titleCase: TitleCasePipe) { }
+    private titleCase: TitleCasePipe,
+    private currencyPipe: CurrencyPipe) { }
 
   ngOnInit(): void {
   }
 
   generatePDF() {
     let docDefinition = {
-      // pageOrientation: 'landscape',
+      pageOrientation: 'landscape',
       content: [
 
         {
-          text: 'Properties\n\n',
+          text: 'Statements of Accounts\n\n',
           bold: true,
           fontSize: 14,
         },
         {
           table: {
-            widths: ['auto', 'auto', 'auto', 'auto', '*'],
-            body: this.returnRunningStatements(this.properties)
+            widths: ['auto', '48%', 'auto', 'auto', '*'],
+            body: this.returnRunningStatements(this.StatementsOfAccounts)
           },
           layout: {
             fillColor: function (rowIndex: number, node: any, columnIndex: any) {
@@ -85,7 +62,7 @@ export class PackedComponent implements OnInit {
   }
 
 
-  returnRunningStatements(paymentList: PropertyInterface[]) {
+  returnRunningStatements(paymentList: StatementAccount[]) {
     let payments: any = [
       [
         {
@@ -94,22 +71,22 @@ export class PackedComponent implements OnInit {
           margin: [0, 7]
         },
         {
-          text: 'NAME',
+          text: 'ITEM',
           style: 'header',
           margin: [0, 7]
         },
         {
-          text: 'PROPERTY NUMBER',
+          text: 'TYPE',
           style: 'header',
           margin: [0, 7]
         },
         {
-          text: 'PROPERTY CATEGORY',
+          text: 'AMOUNT',
           style: 'header',
           margin: [0, 7]
         },
         {
-          text: 'STATUS',
+          text: 'DATE',
           style: 'header',
           margin: [0, 7]
         },
@@ -122,16 +99,16 @@ export class PackedComponent implements OnInit {
         const details = paymentList[i];
         let content: any = [];
         let color = null;
-        if (details['property_status']['code'] === 'ACTIVE') {
+        if (details['entry_type'] === 'PAYMENT') {
           color = '#198754'
         } else {
           color = '#ff8000'
         }
         content.splice(0, 0, i + 1);
-        content.splice(1, 0, { text: details['name'], style: 'body', bold: true });
-        content.splice(2, 0, { text: details['property_number'], style: 'body' });
-        content.splice(3, 0, { text: details['property_category']['name'], style: 'body' });
-        content.splice(5, 0, { text: details['property_status']['name'], style: 'body', color: color });
+        content.splice(1, 0, { text: this.titleCase.transform(this.replaceUderscore.transform(details['description'])), style: 'body', bold: true });
+        content.splice(2, 0, { text: details['entry_type'], style: 'body', color: color });
+        content.splice(3, 0, { text: this.currencyPipe.transform(details['amount'], ' '), style: 'body' });
+        content.splice(5, 0, { text: this.dateFormatter.transform(details['date_created'], 'medium'), style: 'body' });
         payments.push(content);
       }
 
