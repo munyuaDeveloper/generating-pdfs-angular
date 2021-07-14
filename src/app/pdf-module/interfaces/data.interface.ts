@@ -1,11 +1,7 @@
 export interface StatementAccount {
   id: string;
-  account_id: string;
   amount: string;
-  date_created: string;
   description: string;
-  entry_type: string;
-  authorized_by: string;
 }
 export interface RunningStatement {
   id: string;

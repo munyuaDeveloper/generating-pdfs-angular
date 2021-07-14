@@ -37,8 +37,8 @@ export class StatementAccountComponent implements OnInit {
         },
         {
           table: {
-            widths: ['auto', '48%', 'auto', 'auto', '*'],
-            body: this.returnRunningStatements(this.StatementsOfAccounts)
+            widths: ['auto', '50%', '*'],
+            body: this.returnStatementsOfAccounts(this.StatementsOfAccounts)
           },
           layout: {
             fillColor: function (rowIndex: number, node: any, columnIndex: any) {
@@ -49,7 +49,7 @@ export class StatementAccountComponent implements OnInit {
       ],
       styles: {
         header: {
-          fontSize: 11,
+          fontSize: 12,
           bold: true,
         },
         body: {
@@ -62,7 +62,7 @@ export class StatementAccountComponent implements OnInit {
   }
 
 
-  returnRunningStatements(paymentList: StatementAccount[]) {
+  returnStatementsOfAccounts(paymentList: StatementAccount[]) {
     let payments: any = [
       [
         {
@@ -71,12 +71,7 @@ export class StatementAccountComponent implements OnInit {
           margin: [0, 7]
         },
         {
-          text: 'ITEM',
-          style: 'header',
-          margin: [0, 7]
-        },
-        {
-          text: 'TYPE',
+          text: 'Cost',
           style: 'header',
           margin: [0, 7]
         },
@@ -85,15 +80,10 @@ export class StatementAccountComponent implements OnInit {
           style: 'header',
           margin: [0, 7]
         },
-        {
-          text: 'DATE',
-          style: 'header',
-          margin: [0, 7]
-        },
       ]
     ]
     let payment_record = []
-
+    let sub_totals = 0;
     if (paymentList.length > 0) {
       for (let i = 0; i < paymentList.length; i++) {
         const details = paymentList[i];
@@ -106,24 +96,34 @@ export class StatementAccountComponent implements OnInit {
         }
         content.splice(0, 0, i + 1);
         content.splice(1, 0, { text: this.titleCase.transform(this.replaceUderscore.transform(details['description'])), style: 'body', bold: true });
-        content.splice(2, 0, { text: details['entry_type'], style: 'body', color: color });
-        content.splice(3, 0, { text: this.currencyPipe.transform(details['amount'], ' '), style: 'body' });
-        content.splice(5, 0, { text: this.dateFormatter.transform(details['date_created'], 'medium'), style: 'body' });
+        content.splice(2, 0, { text: this.currencyPipe.transform(details['amount'], ' '), style: 'body' });
         payments.push(content);
+        sub_totals += Number(details['amount'])
       }
+      const total_row = [
+        {
+          colSpan: 2,
+          text: 'Total',
+          style: 'body',
+          bold: true,
+          margin: [15, 7]
+        },
+        {
+          text: '',
+          style: 'body'
+        }, {
+          text: this.currencyPipe.transform(sub_totals, ' '),
+          style: 'body',
+          bold: true,
+          margin: [0, 7]
+        }
+      ]
+      payments.push(total_row);
 
     } else {
       payment_record = [
         {
-          colSpan: 5,
-          text: '',
-          style: 'body'
-        },
-        {
-          text: '',
-          style: 'body'
-        },
-        {
+          colSpan: 3,
           text: '',
           style: 'body'
         },

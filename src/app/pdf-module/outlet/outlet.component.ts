@@ -22,12 +22,28 @@ export class OutletComponent implements OnInit {
   StatementsOfAccounts: StatementAccount[] = [
     {
       "id": "e5b93db8-115b-4e35-b446-e3493e777991",
-      "account_id": "1ea71cb2-f727-4099-877d-5e80361ba320",
-      "amount": "-100.00",
-      "date_created": "2021-05-10T01:24:50.750464",
-      "description": "HOUSE_DEPOSIT bill",
-      "entry_type": "INVOICE",
-      "authorized_by": "40a48e08-f128-4d42-a906-817dc9a44eef"
+      "amount": "1000000.00",
+      "description": "Building costs",
+    },
+    {
+      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
+      "amount": "50000",
+      "description": "Servicing",
+    },
+    {
+      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
+      "amount": "300000",
+      "description": "Consulting and Warranty",
+    },
+    {
+      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
+      "amount": "50000",
+      "description": "Marketing",
+    },
+    {
+      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
+      "amount": "34000",
+      "description": "Soft Contingency",
     },
   ]
 
