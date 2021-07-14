@@ -106,6 +106,7 @@ export class StatementAccountComponent implements OnInit {
           text: 'Total',
           style: 'body',
           bold: true,
+          fontSize: 13,
           margin: [15, 7]
         },
         {
@@ -115,6 +116,7 @@ export class StatementAccountComponent implements OnInit {
           text: this.currencyPipe.transform(sub_totals, ' '),
           style: 'body',
           bold: true,
+          fontSize: 13,
           margin: [0, 7]
         }
       ]
