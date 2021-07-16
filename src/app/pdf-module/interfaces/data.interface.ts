@@ -1,8 +1,14 @@
-export interface StatementAccount {
-  id: string;
-  amount: string;
-  description: string;
+export interface Subcategory {
+  category: string;
+  total: string;
 }
+
+export interface StatementAccount {
+  category_name: string;
+  total: number;
+  subcategories: Subcategory[];
+}
+
 export interface RunningStatement {
   id: string;
   account_id: string;

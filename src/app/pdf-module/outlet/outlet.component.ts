@@ -21,30 +21,29 @@ export class OutletComponent implements OnInit {
   ]
   StatementsOfAccounts: StatementAccount[] = [
     {
-      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
-      "amount": "1000000.00",
-      "description": "Building costs",
+      "category_name": "Revenue",
+      "total": 10000,
+      "subcategories": [
+        {
+          "category": "ELECTRICITY",
+          "total": "8500.00"
+        },
+        {
+          "category": "RENT",
+          "total": "1500.00"
+        }
+      ]
     },
     {
-      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
-      "amount": "50000",
-      "description": "Servicing",
-    },
-    {
-      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
-      "amount": "300000",
-      "description": "Consulting and Warranty",
-    },
-    {
-      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
-      "amount": "50000",
-      "description": "Marketing",
-    },
-    {
-      "id": "e5b93db8-115b-4e35-b446-e3493e777991",
-      "amount": "34000",
-      "description": "Soft Contingency",
-    },
+      "category_name": "Expense",
+      "total": 12000,
+      "subcategories": [
+        {
+          "category": "REPAIRS",
+          "total": "12000.00"
+        }
+      ]
+    }
   ]
 
   payments: PaymentInterface[] = [
